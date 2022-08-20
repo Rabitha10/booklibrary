@@ -1,0 +1,45 @@
+{%extends 'c_base.html'%}
+{%block body_block%}
+<div class="card text-center">
+    <div class="card-header">
+        <h2>Shopping carts</h2>
+    </div>
+    {%for cart in items%}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3">
+                <img src="{{cart.item.image.url}}" width="200px" height="300px" alt="">
+            </div>
+            <div class="col-3">
+                <h5>Book name:{{cart.item.book_name}}</h5>
+                <p>Author:{{cart.item.author}}</p>
+                <p>published_date:{{cart.item.published_date}}</p>
+                <p>Copies:{{cart.item.copies}}</p>
+            </div>
+            <div class="col-2">
+                <h6>Price:{{cart.item.price}}</h6>
+
+            </div>
+            <div class="col-4 p-3">
+                <span>{{cart.status}}</span>
+                <a href="{%url 'removecartitem' cart.id %}" class="btn btn-outline-danger">remove</a>
+                {%if cart.status != "order_placed" %}
+                <a href="{%url 'ordercreate' cart.item.id cart.id %}" class="btn btn-outline-primary">Buy Now</a>
+
+                {%endif%}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+    {%else%}
+    <strong>your cart is empty</strong>
+
+
+    <div class="card-footer text-muted">
+        SubTotal {{sum}}
+    </div>
+</div>
+
+{%endblock%}
